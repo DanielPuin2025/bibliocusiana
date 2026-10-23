@@ -73,7 +73,7 @@ Sistema web completo para la gestión de préstamos de libros en una biblioteca 
 
 ## 🚀 Despliegue en EasyPanel
 
-1. Crear un servicio de aplicación conectado al repositorio `DanielPuin2025/bibliocusiana` y usar el `Dockerfile` incluido. El contenedor escucha en el puerto `80`; la raíz del dominio redirige a `frontend/`, que sirve la aplicación y sus recursos estáticos.
+1. Crear un servicio de aplicación conectado al repositorio `DanielPuin2025/bibliocusiana` y usar el `Dockerfile` incluido. El contenedor escucha en el puerto `80`; Apache sirve la aplicación desde la raíz y también admite `frontend/`, sin exponer listados de directorios.
 2. Crear o seleccionar el servicio MySQL y configurar `DB_HOST`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` en las variables privadas del servicio web. `DB_HOST` debe ser el nombre de host interno del servicio MySQL que proporciona EasyPanel; no uses `localhost`, porque PHP y MySQL corren en contenedores distintos. El script SQL usa la base `biblioteca_db`, así que `DB_NAME` debe tener ese valor.
 3. En el servicio web, asociar el dominio `bibliocusiana.programacionsena.online` y activar HTTPS. Configurar el DNS del subdominio según el destino que indique EasyPanel; la dirección `/projects/sustentaciones2026` es la interfaz de administración, no la URL pública de la aplicación.
 4. Inicializar las tablas importando `database/biblioteca.sql` en la base indicada por `DB_NAME`; luego, si se deben conservar datos existentes, restaurar el respaldo por un canal privado y seguro. Los respaldos con usuarios, CSV y hojas Excel no deben subirse al repositorio ni incluirse en imágenes Docker.
