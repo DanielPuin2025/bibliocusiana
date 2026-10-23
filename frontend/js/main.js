@@ -753,11 +753,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalClave = document.getElementById('modal-cambiar-clave');
     const formClave = document.getElementById('form-cambiar-clave');
     const mensajeClave = document.getElementById('mensaje-cambiar-clave');
-    document.getElementById('btn-cambiar-clave').addEventListener('click', () => {
+    document.querySelectorAll('.abrir-cambiar-clave').forEach(boton => boton.addEventListener('click', () => {
         formClave.reset();
         mensajeClave.textContent = '';
         modalClave.classList.remove('hidden');
-    });
+    }));
     document.getElementById('cerrar-modal-clave').addEventListener('click', () => modalClave.classList.add('hidden'));
     formClave.addEventListener('submit', async evento => {
         evento.preventDefault();

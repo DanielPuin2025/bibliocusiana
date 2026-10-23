@@ -78,6 +78,7 @@
                 <button type="button" class="btn-accion" data-vista="catalogo">Catálogo</button>
                 <button type="button" class="btn-accion" data-vista="prestamos-usuario">Préstamos y Pendientes</button>
                 <button type="button" class="btn-accion" data-vista="resenas">Dejar Reseña</button>
+                <button type="button" class="btn-accion abrir-cambiar-clave">Cambiar contraseña</button>
             </div>
             <div id="acciones-admin" style="display: none;">
                 <button type="button" class="btn-accion" data-vista="catalogo">Catálogo de libros</button>
@@ -173,6 +174,8 @@
                 </div>
                 </section>
                 <section id="vista-usuarios-admin" class="hidden">
+                <h3>Mi cuenta</h3>
+                <button type="button" class="btn-accion abrir-cambiar-clave">Cambiar mi contraseña</button>
                 <h3 id="usuarios-admin">Crear usuario</h3>
                 <form id="form-nuevo-usuario">
                     <input name="doc" placeholder="Documento" maxlength="20" required>
@@ -215,7 +218,6 @@
             </div>
         </section>
         <button type="button" class="btn-volver btn-cerrar-sesion" id="btn-cerrar">Cerrar Sesión</button>
-        <button type="button" class="btn-volver btn-cerrar-sesion" id="btn-cambiar-clave">Cambiar contraseña</button>
     </div>
 
     <div id="modal-cambiar-clave" class="modal-libro hidden" role="dialog" aria-modal="true" aria-labelledby="titulo-cambiar-clave">
@@ -267,7 +269,7 @@
         </div>
     </div>
 
-    <script src="../frontend/js/portadas-inteligente.js?v=2026-10-22-cambiar-clave"></script>
-    <script src="../frontend/js/main.js?v=2026-10-22-cambiar-clave"></script>
+    <script src="../frontend/js/portadas-inteligente.js?v=2026-10-22-clave-usuarios"></script>
+    <script src="../frontend/js/main.js?v=2026-10-22-clave-usuarios"></script>
 </body>
 </html>
