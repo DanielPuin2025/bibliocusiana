@@ -705,6 +705,25 @@ tr:hover .portada-libro {
 /* El escudo institucional sustituye el recurso anterior de la pantalla de acceso. */
 .acceso-container .logo-container { display: none; }
 
+.sena-identidad {
+    align-items: center;
+    border-top: 1px solid #e4ebe1;
+    color: #526454;
+    display: flex;
+    font-size: .76rem;
+    font-weight: 600;
+    gap: 10px;
+    justify-content: center;
+    margin: 24px auto 0;
+    padding-top: 16px;
+}
+
+.sena-identidad img {
+    height: 36px;
+    object-fit: contain;
+    width: 42px;
+}
+
 .acceso-container h1 {
     font-family: 'Source Serif 4', Georgia, serif;
     color: #173a26;
