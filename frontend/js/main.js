@@ -851,8 +851,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const listaUsuarios = document.getElementById('lista-usuarios');
     const formEditarUsuario = document.getElementById('form-editar-usuario');
     let usuariosAdmin = [];
-    const escaparHtml = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
     async function cargarUsuariosAdmin() {
         const params = new URLSearchParams({ q: document.getElementById('buscar-usuarios').value.trim(), rol: document.getElementById('filtro-rol-usuarios').value });
         if (document.getElementById('filtro-sin-telefono').checked) params.set('sin_telefono', '1');
