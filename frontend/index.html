@@ -215,6 +215,24 @@
             </div>
         </section>
         <button type="button" class="btn-volver btn-cerrar-sesion" id="btn-cerrar">Cerrar Sesión</button>
+        <button type="button" class="btn-volver btn-cerrar-sesion" id="btn-cambiar-clave">Cambiar contraseña</button>
+    </div>
+
+    <div id="modal-cambiar-clave" class="modal-libro hidden" role="dialog" aria-modal="true" aria-labelledby="titulo-cambiar-clave">
+        <div class="modal-contenido">
+            <button type="button" id="cerrar-modal-clave" class="cerrar-modal" aria-label="Cerrar">×</button>
+            <h3 id="titulo-cambiar-clave">Cambiar contraseña</h3>
+            <form id="form-cambiar-clave">
+                <label for="clave-actual">Contraseña actual</label>
+                <input type="password" id="clave-actual" name="actual" autocomplete="current-password" required>
+                <label for="clave-nueva">Nueva contraseña (mínimo 8 caracteres)</label>
+                <input type="password" id="clave-nueva" name="nueva" minlength="8" autocomplete="new-password" required>
+                <label for="clave-confirmar">Confirmar nueva contraseña</label>
+                <input type="password" id="clave-confirmar" minlength="8" autocomplete="new-password" required>
+                <button class="btn-primary" type="submit">Guardar</button>
+                <p id="mensaje-cambiar-clave" class="mensaje-formulario" aria-live="polite"></p>
+            </form>
+        </div>
     </div>
 
     <div id="modal-editar-libro" class="modal-libro hidden" role="dialog" aria-modal="true" aria-labelledby="titulo-editar-libro">
@@ -249,7 +267,7 @@
         </div>
     </div>
 
-    <script src="../frontend/js/portadas-inteligente.js?v=2026-10-22-asset-paths"></script>
-    <script src="../frontend/js/main.js?v=2026-10-22-asset-paths"></script>
+    <script src="../frontend/js/portadas-inteligente.js?v=2026-10-22-cambiar-clave"></script>
+    <script src="../frontend/js/main.js?v=2026-10-22-cambiar-clave"></script>
 </body>
 </html>

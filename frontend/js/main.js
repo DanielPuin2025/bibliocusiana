@@ -750,6 +750,42 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('panel-usuario').classList.add('hidden');
     });
 
+    const modalClave = document.getElementById('modal-cambiar-clave');
+    const formClave = document.getElementById('form-cambiar-clave');
+    const mensajeClave = document.getElementById('mensaje-cambiar-clave');
+    document.getElementById('btn-cambiar-clave').addEventListener('click', () => {
+        formClave.reset();
+        mensajeClave.textContent = '';
+        modalClave.classList.remove('hidden');
+    });
+    document.getElementById('cerrar-modal-clave').addEventListener('click', () => modalClave.classList.add('hidden'));
+    formClave.addEventListener('submit', async evento => {
+        evento.preventDefault();
+        mensajeClave.className = 'mensaje-formulario';
+        if (formClave.nueva.value !== document.getElementById('clave-confirmar').value) {
+            mensajeClave.textContent = 'Las contraseñas nuevas no coinciden.';
+            mensajeClave.classList.add('error');
+            return;
+        }
+        const boton = formClave.querySelector('button[type="submit"]');
+        boton.disabled = true;
+        try {
+            const respuesta = await fetch(API_BASE + 'cambiar_contrasena.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+                body: JSON.stringify({ actual: formClave.actual.value, nueva: formClave.nueva.value })
+            });
+            const resultado = await respuesta.json();
+            if (resultado.status !== 'success') throw new Error(resultado.message || 'No se pudo cambiar la contraseña.');
+            formClave.reset();
+            mensajeClave.textContent = resultado.message;
+            mensajeClave.classList.add('exito');
+        } catch (error) {
+            mensajeClave.textContent = error.message;
+            mensajeClave.classList.add('error');
+        } finally { boton.disabled = false; }
+    });
+
     // Funciones para el panel de administrador
     function mostrarPanelAdmin() {
         const panelAdmin = document.getElementById('panel-admin');
