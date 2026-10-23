@@ -1,0 +1,10 @@
+vendor/
+/.env
+/.env.*
+!/.env.example
+/backend/config/mail.php
+/.claude/
+/.vscode/
+/frontend/js/main.js.backup
+/database/*.csv
+/database/*.xlsx

@@ -1,0 +1,13 @@
+# 🔧 PLAN DE RESTAURACIÓN COMPLETA DEL SISTEMA
+
+## PROBLEMA IDENTIFICADO
+El sistema tiene múltiples archivos CSS/JS que causan conflictos y errores de conexión con PHP.
+
+## SOLUCIÓN: RESETEO COMPLETO A VERSIÓN ESTABLE
+
+### PASO 1: Eliminar archivos problemáticos
+### PASO 2: Restaurar archivos originales
+### PASO 3: Aplicar solo las correcciones necesarias (15 días, 1 día recordatorio)
+### PASO 4: Verificar que todo funcione
+
+Ejecutando...

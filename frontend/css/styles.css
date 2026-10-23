@@ -1,0 +1,806 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #bed2fc 0%, #bfffc7 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.escudo-colegio {
+    width: 140px; /* Puedes subirlo a 140px o 150px si el logo es más ancho */
+    height: auto; 
+    object-fit: contain;
+    filter: drop-shadow(0px 4px 6px rgba(225, 165, 248, 0.521));
+}
+
+/* Tarjeta contenedora */
+.container {
+    background: #eefff6;
+    width: 100%;
+    max-width: 900px;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(199, 255, 173, 0.747);
+    text-align: center;
+}
+
+/* ESTA REGLA OCULTA LAS PANTALLAS SECUNDARIAS */
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    color: #378ee6;
+    margin-bottom: 8px;
+    font-size: 26px;
+}
+
+.subtitle, .welcome-text {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Botones de Rol */
+.roles-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-rol {
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f8f9fa;
+    color: #49b99d;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-rol:hover {
+    background-color: #55cc91;
+    color: white;
+    border-color: #58cfab;
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #b574ff;
+    margin-bottom: 6px;
+}
+
+.consentimiento-whatsapp {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    color: #315b4a;
+    font-size: 14px;
+}
+
+.consentimiento-whatsapp input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    padding: 0;
+    margin-top: 2px;
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #54cca4;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+
+}
+
+input:focus {
+    border-color: #85aef7;
+}
+
+/* Botones de acción */
+.btn-primary {
+    padding: 13px;
+    background-color: #67d193;
+    color: rgb(149, 255, 108);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #779ee6;
+}
+
+.btn-volver {
+    padding: 10px;
+    background-color: #80da9b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.btn-volver:hover {
+    background-color: #778cff;
+}
+
+/* Tablas */
+/* ==========================================
+   ESTILOS PARA HACER LA TABLA RESPONSIVA
+   ========================================== */
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto; /* Permite deslizar horizontalmente en celulares */
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+/* Los estilos de la tabla continúan igual */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 450px; /* Asegura un ancho mínimo para que no se aplaste en pantallas pequeñas */
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #859eff;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+
+th {
+    background-color: #7fbfff;
+    color: #9de7c5;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.disponible { background-color: #98ffa1; color: #51e094; }
+.prestado { background-color: #88ffd2; color: #ba72fd; }
+
+.btn-accion {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-prestar { background-color: #53cf87; color: white; }
+.btn-devolver { background-color: #bdc3c7; color: white; cursor: not-allowed; }
+
+/* Panel de Administrador */
+.admin-panel {
+    background: #b7dbff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 2px solid #c0dbff;
+}
+
+/* Sección de carga masiva */
+.carga-masiva-section {
+    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+    border: 2px solid #81c784;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.carga-masiva-section h3 {
+    color: #2e7d32;
+    font-size: 18px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.upload-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.upload-card {
+    background: white;
+    border: 2px dashed #66bb6a;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-card:hover {
+    border-color: #43a047;
+    box-shadow: 0 6px 20px rgba(105, 255, 112, 0.25);
+    transform: translateY(-3px);
+}
+
+.upload-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.upload-label {
+    display: block;
+    font-weight: 700;
+    color: #1b5e20;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+.btn-upload {
+    background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.btn-upload:hover {
+    background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+    transform: scale(1.05);
+}
+
+.upload-hint {
+    display: block;
+    color: #558b2f;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.admin-panel h2 {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-panel h3 {
+    color: #7f8c8d;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.catalogo-section {
+    margin-top: 20px;
+}
+
+.catalogo-section h3 {
+    color: #2c3e50;
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.btn-aprobar {
+    background-color: #53cf87;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-aprobar:hover {
+    background-color: #45b876;
+}
+
+.btn-rechazar {
+    background-color: #d32f2f;
+    color: white;
+}
+
+.btn-rechazar:hover {
+    background-color: #b71c1c;
+}
+
+/* Mejorar diseño de botones en tablas */
+td button {
+    margin: 2px;
+}
+
+/* Header de biblioteca */
+.header-biblioteca {
+    margin-bottom: 25px;
+}
+
+.header-biblioteca h1 {
+    font-size: 32px;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.header-biblioteca .welcome-text {
+    font-size: 20px;
+    color: #34495e;
+    font-weight: 600;
+}
+
+.resumen-panel {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #fff3e0 100%);
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    text-align: left;
+    border: 2px solid #90caf9;
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.resumen-panel::before {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.3; }
+}
+
+.resumen-panel h2 {
+    color: #1565c0;
+    font-size: 22px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.resumen-panel h2::before {
+    content: '📊';
+    font-size: 28px;
+}
+
+.tarjetas-resumen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.tarjeta-resumen {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-left: 5px solid #53cf87;
+    border-radius: 12px;
+    padding: 16px;
+    color: #2c3e50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.tarjeta-resumen::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(83, 207, 135, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta-resumen:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(83, 207, 135, 0.3);
+    border-left-width: 6px;
+}
+
+.tarjeta-resumen:hover::after {
+    transform: scale(1.5);
+}
+
+.tarjeta-resumen:nth-child(1) {
+    border-left-color: #5c6bc0;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.tarjeta-resumen:nth-child(2) {
+    border-left-color: #ab47bc;
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.tarjeta-resumen:nth-child(3) {
+    border-left-color: #ec407a;
+    animation: slideInLeft 0.7s ease-out;
+}
+
+.tarjeta-resumen:nth-child(4) {
+    border-left-color: #ff7043;
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.tarjeta-resumen:nth-child(5) {
+    border-left-color: #ffa726;
+    animation: slideInLeft 0.9s ease-out;
+}
+
+.tarjeta-resumen:nth-child(6) {
+    border-left-color: #ef5350;
+    animation: slideInLeft 1s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.tarjeta-resumen span {
+    font-size: 13px;
+    color: #607d8b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tarjeta-resumen strong {
+    display: block;
+    font-size: 26px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #1e88e5 0%, #43a047 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.alerta-vencido { color: #b71c1c; font-weight: bold; }
+.estado-rojo { background: #ffebee; }
+.estado-amarillo { background: #fff8e1; }
+.estado-verde { background: #e8f5e9; }
+.alerta-entrega { color: #8a5a00; font-weight: bold; }
+.notificaciones-prestamo { position: relative; z-index: 1; }
+.notificacion-prestamo { background: #fff3cd; border-left: 4px solid #e0a800; border-radius: 8px; color: #5f4500; margin: 8px 0; padding: 11px 14px; }
+.notificacion-prestamo.vencido { background: #fde8e7; border-left-color: #c62828; color: #8b1b1b; }
+.btn-perdido { background: #6d3b1f; color: #fff; }
+
+/* Identidad visual de la Institución Educativa El Cusiana */
+body {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    background:
+        radial-gradient(circle at top right, rgba(255, 230, 0, .25), transparent 32%),
+        linear-gradient(135deg, #f4f8f2 0%, #e3f0df 100%);
+    color: #193427;
+}
+
+.container {
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid rgba(18, 90, 44, .12);
+    box-shadow: 0 18px 45px rgba(16, 73, 35, .16);
+}
+
+.acceso-container {
+    max-width: 620px;
+    padding: 30px 42px 36px;
+    overflow: hidden;
+}
+
+.identidad-institucional {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #dce8d8;
+    text-align: left;
+}
+
+/* Portada: logo de Bibliocusiana centrado, como en el diseño original. */
+.acceso-container .identidad-institucional {
+    justify-content: center;
+    margin-bottom: 18px;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.acceso-container .identidad-institucional > div:last-child { display: none; }
+
+.acceso-container .logos-institucionales { justify-content: center; }
+
+.acceso-container .logo-biblioteca-institucional {
+    height: 185px;
+    max-width: 330px;
+}
+
+.logos-institucionales {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    gap: 10px;
+}
+
+.logo-biblioteca-institucional {
+    height: 74px;
+    max-width: 132px;
+    object-fit: contain;
+}
+
+.logo-institucion {
+    width: 60px;
+    height: 78px;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 8px rgba(18, 64, 31, .18));
+}
+
+/* El escudo se reserva para el área exclusiva de administración. */
+.identidad-institucional .logo-institucion { display: none; }
+
+.registro-libro-section { background: #f5faf2; border: 1px solid #d8e5d4; border-radius: 14px; margin: 0 0 28px; padding: 22px; text-align: left; }
+.registro-libro-section h3 { color: #174d2b; margin: 0 0 5px; }
+.registro-ayuda { color: #657567; font-size: .9rem; margin: 0 0 18px; }
+.registro-libro-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.registro-libro-section .input-group { margin-bottom: 0; }
+.registro-libro-section input, .registro-libro-section select { background: #fff; border: 1px solid #cbdcc9; border-radius: 8px; font: inherit; padding: 10px; width: 100%; }
+.registro-libro-section .btn-primary { margin-top: 18px; }
+.mensaje-formulario { margin: 12px 0 0; min-height: 1.3em; }
+.mensaje-formulario.exito { color: #176b32; }
+.mensaje-formulario.error { color: #b42318; }
+
+.escudo-panel-admin {
+    display: none;
+    height: 92px;
+    margin: 0 auto 12px;
+    object-fit: contain;
+    width: 72px;
+}
+
+.admin-panel h2 { justify-content: center; }
+
+.portada-libro {
+    background: #edf4e9;
+    border-radius: 8px;
+    box-shadow: 0 3px 9px rgba(17, 65, 34, .15);
+    display: block;
+    height: 84px;
+    margin: 0 auto;
+    object-fit: cover;
+    transition: transform .2s ease, box-shadow .2s ease;
+    width: 60px;
+}
+
+tr:hover .portada-libro {
+    box-shadow: 0 7px 15px rgba(17, 65, 34, .24);
+    transform: scale(1.08);
+}
+
+.titulo-libro {
+    color: #173a26;
+    font-weight: 700;
+}
+
+.autor-libro {
+    color: #657567;
+    display: block;
+    font-size: .8rem;
+    margin-top: 4px;
+}
+
+.buscador-libros { align-items: center; background: #fff; border: 1px solid #d8e5d4; border-radius: 10px; display: flex; gap: 8px; margin: 0 0 16px; padding: 0 12px; }
+.buscador-libros span { color: #1a6a35; font-size: 1.6rem; }
+.buscador-libros input { border: 0; padding: 13px 4px; }
+.filtros-avanzados { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin: 0 0 18px; text-align: left; }
+.filtros-avanzados select, #form-resena select, #form-resena textarea { border: 1px solid #d8e5d4; border-radius: 8px; font: inherit; padding: 10px; width: 100%; }
+.filtros-avanzados .btn-accion { background: #e7f3e9; color: #174d2b; }
+.modulo-interactivo { background: #f5faf2; border: 1px solid #d8e5d4; border-radius: 14px; margin-top: 28px; padding: 22px; text-align: left; }
+.modulo-interactivo h2 { color: #174d2b; margin-bottom: 16px; }
+.estado-interactivo { background: #fff8cf; border-radius: 8px; color: #5b4b00; margin: 0 0 16px; padding: 10px 12px; }
+.estado-interactivo.desbloqueado { background: #e7f3e9; color: #174d2b; }
+.modulo-interactivo fieldset { border: 0; margin: 0; min-inline-size: 0; padding: 0; }
+.modulo-interactivo fieldset:disabled { cursor: not-allowed; opacity: .55; }
+.interactivo-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+#form-resena { gap: 9px; } #form-resena label { font-weight: 700; } #form-resena textarea { min-height: 90px; resize: vertical; }
+.lista-resenas { margin-top: 16px; max-height: 300px; overflow-y: auto; }
+.resena { background: #fff; border-left: 4px solid #1a6a35; border-radius: 6px; margin: 8px 0; padding: 10px; }
+.resena p { margin: 6px 0; } .resena small { color: #657567; }
+.actividad-lectura { background: #fff8cf; border-radius: 10px; padding: 16px; } .actividad-lectura p { line-height: 1.6; margin: 10px 0; }
+.actividad-lectura .btn-accion { background: #1a6a35; color: #fff; margin-top: 10px; }
+.btn-detalle-libro { background: transparent; border: 0; cursor: pointer; padding: 0; }
+.modal-libro { align-items: center; background: rgba(8, 29, 15, .65); display: flex; inset: 0; justify-content: center; padding: 20px; position: fixed; z-index: 20; }
+.modal-contenido { background: #fff; border-radius: 16px; max-width: 660px; padding: 28px; position: relative; width: 100%; }
+#detalle-libro { display: grid; gap: 24px; grid-template-columns: 170px 1fr; }
+.portada-detalle { border-radius: 10px; box-shadow: 0 10px 22px rgba(0,0,0,.18); height: 240px; object-fit: cover; width: 170px; }
+.cerrar-modal { background: #174d2b; border: 0; border-radius: 50%; color: white; cursor: pointer; font-size: 1.4rem; height: 32px; position: absolute; right: 12px; top: 12px; width: 32px; }
+.sinopsis-libro { line-height: 1.6; margin-top: 14px; }
+.modal-ancho { max-height: 90vh; max-width: 760px; overflow-y: auto; text-align: left; }
+.acciones-modal { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+#form-editar-libro label { display: block; font-size: .85rem; }
+#form-editar-libro input, #form-editar-libro select, #form-editar-libro textarea { background: #fff; border: 1px solid #5fcf9a; border-radius: 8px; box-sizing: border-box; display: block; font: inherit; margin-top: 4px; padding: 10px; width: 100%; }
+#form-editar-libro .btn-primary { margin-top: 14px; }
+.btn-eliminar-libro { background: #c62828 !important; color: #fff !important; }
+.btn-cerrar-sesion { background: #c62828; box-shadow: 0 4px 12px rgba(0,0,0,.25); color: #fff; margin: 0; position: fixed; right: 16px; top: 14px; z-index: 15; }
+.btn-cerrar-sesion:hover { background: #8e1c1c; }
+.estrellas { display: inline-flex; flex-direction: row-reverse; font-size: 2.2rem; gap: 4px; justify-content: flex-end; margin: 6px 0 14px; }
+.estrellas input { height: 0; opacity: 0; position: absolute; width: 0; }
+.estrellas label { color: #c9c9c9; cursor: pointer; line-height: 1; margin: 0; }
+.estrellas input:checked ~ label, .estrellas label:hover, .estrellas label:hover ~ label { color: #f5b301; }
+.estrellas input:focus-visible + label { outline: 2px solid #174d2b; }
+@media (max-width: 560px) { #detalle-libro { grid-template-columns: 1fr; } .portada-detalle { margin: auto; } }
+
+.institucion-nombre {
+    font-size: .86rem;
+    font-weight: 800;
+    letter-spacing: .055em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    color: #16472b;
+}
+
+.institucion-lugar {
+    margin-top: 4px;
+    color: #637466;
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+/* El escudo institucional sustituye el recurso anterior de la pantalla de acceso. */
+.acceso-container .logo-container { display: none; }
+
+.acceso-container h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: #173a26;
+    font-size: clamp(1.55rem, 4vw, 2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    margin: 0 auto 12px;
+    max-width: 480px;
+}
+
+.acceso-container .subtitle {
+    color: #596b5c;
+    font-size: .96rem;
+    line-height: 1.6;
+    margin: 0 auto 27px;
+    max-width: 440px;
+}
+
+.roles-grid { gap: 10px; }
+
+.btn-rol {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #d8e5d4;
+    border-radius: 12px;
+    box-shadow: 0 3px 0 rgba(24, 83, 43, .04);
+    color: #1d4f30;
+    display: flex;
+    font-family: inherit;
+    font-size: 1rem;
+    justify-content: space-between;
+    padding: 16px 18px;
+    text-align: left;
+}
+
+.btn-rol::before {
+    background: #f1f8ef;
+    border-radius: 50%;
+    content: '→';
+    display: grid;
+    font-weight: 800;
+    height: 28px;
+    order: 2;
+    place-items: center;
+    transition: transform .2s ease;
+    width: 28px;
+}
+
+.btn-rol:hover, .btn-rol:focus-visible {
+    background: #1a6a35;
+    border-color: #1a6a35;
+    box-shadow: 0 8px 18px rgba(24, 99, 48, .2);
+    color: #fff;
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.btn-rol:hover::before, .btn-rol:focus-visible::before {
+    background: #ffe600;
+    color: #173a26;
+    transform: translateX(3px);
+}
+
+.btn-primary, .btn-volver, .btn-accion { font-family: inherit; }
+.btn-primary { background: #1a6a35; }
+.btn-primary:hover { background: #125126; }
+
+/* Fondo exclusivo de la pantalla de inicio. `cover` conserva la proporción
+   de la imagen en cualquier tamaño de ventana y la capa oscura mejora el contraste. */
+body.home-page {
+    background-image: linear-gradient(rgba(8, 29, 15, .42), rgba(8, 29, 15, .42)), url('../assets/fondo_bibliocusiana.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body.home-page .acceso-container {
+    background: rgba(255, 255, 255, .78);
+}
+
+.libros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; }
+.libro-tarjeta { display: flex; flex-direction: column; gap: .55rem; padding: 1rem; background: #fff; border: 1px solid #d7e5f5; border-radius: 12px; box-shadow: 0 3px 12px rgba(12, 72, 133, .10); }
+.libro-tarjeta h4, .libro-tarjeta p { margin: 0; }
+.libro-tarjeta h4 { color: #084a88; font-size: .98rem; }
+.portada-contenedor { border: 0; padding: 0; background: transparent; cursor: pointer; }
+.libro-tarjeta .portada-libro { width: 100%; height: 230px; object-fit: cover; border-radius: 8px; }
+.libro-accion { margin-top: auto; }
+
+@media (max-width: 560px) {
+    body { align-items: flex-start; padding: 12px; }
+    .acceso-container { padding: 24px 20px 28px; }
+    .identidad-institucional { gap: 12px; }
+    .logos-institucionales { gap: 6px; }
+    .acceso-container .logo-biblioteca-institucional { height: 145px; max-width: 260px; }
+    .logo-institucion { width: 46px; height: 62px; }
+    .institucion-nombre { font-size: .72rem; }
+    .btn-rol { padding: 14px; }
+}

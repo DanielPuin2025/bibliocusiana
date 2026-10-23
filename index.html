@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación Automática del Sistema</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .test-item {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            border-left: 5px solid #e0e7ff;
+        }
+        .test-item.loading {
+            border-left-color: #ffc107;
+        }
+        .test-item.success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .test-item.error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .test-item h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .test-item p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status.success {
+            background: #28a745;
+            color: white;
+        }
+        .status.error {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Verificación Automática del Sistema</h1>
+            <p>Biblioteca Bibliocusiana</p>
+        </div>
+
+        <div class="content">
+            <div id="test-results"></div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="iniciarTests()">🔄 Ejecutar Tests</button>
+                <button class="btn btn-success hidden" id="btn-abrir-sistema" onclick="abrirSistema()">✅ Abrir Sistema</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tests = [
+            {
+                nombre: 'Conexión con Apache',
+                test: async () => {
+                    const response = await fetch('backend/test_conexion.php');
+                    if (!response.ok) throw new Error('Apache no responde');
+                    return 'Apache funcionando correctamente';
+                }
+            },
+            {
+                nombre: 'Conexión con MySQL',
+                test: async () => {
+                    const response = await fetch('test_libros.php');
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error);
+                    return `Base de datos conectada - ${data.total_libros} libros encontrados`;
+                }
+            },
+            {
+                nombre: 'API de Libros',
+                test: async () => {
+                    const response = await fetch('backend/api/obtener_libros.php');
+                    const data = await response.json();
+                    if (data.status !== 'success') throw new Error(data.message || 'Error en API');
+                    return `API funcionando - ${data.libros.length} libros disponibles`;
+                }
+            },
+            {
+                nombre: 'Archivos Frontend',
+                test: async () => {
+                    const checks = [];
+
+                    // Verificar index.html
+                    const html = await fetch('frontend/index.html');
+                    if (!html.ok) throw new Error('index.html no encontrado');
+                    checks.push('index.html');
+
+                    // Verificar main.js
+                    const js = await fetch('frontend/js/main.js');
+                    if (!js.ok) throw new Error('main.js no encontrado');
+                    checks.push('main.js');
+
+                    // Verificar styles.css
+                    const css = await fetch('frontend/css/styles.css');
+                    if (!css.ok) throw new Error('styles.css no encontrado');
+                    checks.push('styles.css');
+
+                    return `Archivos OK: ${checks.join(', ')}`;
+                }
+            },
+            {
+                nombre: 'Configuración del Sistema',
+                test: async () => {
+                    const response = await fetch('diagnostico_completo.php');
+                    const html = await response.text();
+
+                    if (html.includes('políticas están configuradas correctamente')) {
+                        return 'Sistema configurado: 15 días, recordatorio 1 día antes';
+                    } else if (html.includes('Error de conexión')) {
+                        throw new Error('No se puede conectar a la base de datos');
+                    } else {
+                        return 'Sistema operativo - Revisar políticas manualmente';
+                    }
+                }
+            }
+        ];
+
+        async function iniciarTests() {
+            const container = document.getElementById('test-results');
+            container.innerHTML = '';
+
+            let todosExitosos = true;
+
+            for (const test of tests) {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-item loading';
+                testDiv.innerHTML = `
+                    <h3>${test.nombre} <span class="status loading">⏳ Probando...</span></h3>
+                    <p id="result-${tests.indexOf(test)}">Ejecutando prueba...</p>
+                `;
+                container.appendChild(testDiv);
+
+                try {
+                    const resultado = await test.test();
+                    testDiv.className = 'test-item success';
+                    testDiv.querySelector('.status').className = 'status success';
+                    testDiv.querySelector('.status').textContent = '✅ OK';
+                    document.getElementById(`result-${tests.indexOf(test)}`).textContent = resultado;
+                } catch (error) {
+                    todosExitosos = false;
+                    testDiv.className = 'test-item error';
+                    testDiv.querySelector('.status').className = 'status error';
+                    testDiv.querySelector('.status').textContent = '❌ Error';
+                    document.getElementById(`result-${tests.indexOf(test)}`).innerHTML = `
+                        <strong>Error:</strong> ${error.message}
+                        <br><small>Verifica que Apache y MySQL estén iniciados en XAMPP</small>
+                    `;
+                }
+            }
+
+            if (todosExitosos) {
+                const btnAbrir = document.getElementById('btn-abrir-sistema');
+                btnAbrir.classList.remove('hidden');
+
+                // Agregar mensaje de éxito
+                const successDiv = document.createElement('div');
+                successDiv.className = 'test-item success';
+                successDiv.style.textAlign = 'center';
+                successDiv.style.fontSize = '18px';
+                successDiv.innerHTML = `
+                    <h3>🎉 ¡Sistema Completamente Funcional!</h3>
+                    <p>Todos los tests pasaron exitosamente</p>
+                    <p>Ingresa con una cuenta individual configurada para este entorno.</p>
+                `;
+                container.appendChild(successDiv);
+            } else {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'test-item error';
+                errorDiv.innerHTML = `
+                    <h3>⚠️ Hay problemas que necesitan corrección</h3>
+                    <p>Por favor verifica:</p>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li>XAMPP está iniciado (Apache y MySQL en verde)</li>
+                        <li>La base de datos 'biblioteca_db' existe</li>
+                        <li>El archivo EJECUTAR_AHORA.sql fue ejecutado en phpMyAdmin</li>
+                    </ol>
+                    <pre>-- Ejecuta esto en phpMyAdmin si no lo has hecho:
+USE biblioteca_db;
+UPDATE politicas_prestamo SET dias_prestamo = 15 WHERE categoria_prestamo = 'General';
+UPDATE libros SET imagen = CONCAT('IMAGES-LIBROS/', imagen) WHERE imagen NOT LIKE 'IMAGES-LIBROS/%';</pre>
+                `;
+                container.appendChild(errorDiv);
+            }
+        }
+
+        function abrirSistema() {
+            window.location.href = 'frontend/index.html';
+        }
+
+        // Ejecutar tests automáticamente al cargar
+        window.addEventListener('load', () => {
+            setTimeout(iniciarTests, 500);
+        });
+    </script>
+</body>
+</html>

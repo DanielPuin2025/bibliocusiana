@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Biblioteca</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=sistema-estable-final">
+    <link rel="stylesheet" href="css/diseno-moderno.css?v=3">
+</head>
+<body class="home-page">
+
+    <div class="container acceso-container" id="paso-rol">
+    <div class="identidad-institucional">
+        <div class="logos-institucionales">
+            <img class="logo-biblioteca-institucional" src="assets/logo.1.png" alt="Logo de Bibliocusiana">
+            <img class="logo-institucion" src="assets/logo-institucion-cusiana.png" alt="Escudo de la Institución Educativa El Cusiana">
+        </div>
+        <div>
+            <p class="institucion-nombre">Institución Educativa El Cusiana</p>
+            <p class="institucion-lugar">Tauramena, Casanare</p>
+        </div>
+    </div>
+    <div class="logo-container">
+    <img src="assets/logo.1.png" alt="Logo Biblioteca Colegio" >
+</div>
+
+    <h1>📚 Bienvenido a la Biblioteca</h1>
+    <p class="subtitle">Selecciona tu rol para ingresar al sistema</p>
+    
+    <div class="roles-grid">
+        <button class="btn-rol" data-rol="Estudiante">🎓 Estudiante</button>
+        <button class="btn-rol" data-rol="Profesor">👨‍🏫 Docente</button>
+        <button class="btn-rol" data-rol="Administrador">⚙️ Administrador</button>
+    </div>
+</div>
+
+    <div class="container hidden" id="paso-datos">
+        <h1 id="titulo-rol">Registro de Datos</h1>
+        <p class="subtitle">Completa tu información para continuar</p>
+        
+       <form id="form-registro">
+    <div class="input-group">
+        <label for="doc">Documento / T.I</label>
+        <input type="text" id="doc" placeholder="Ingresa tu documento" required>
+    </div>
+
+    <div class="input-group registro-cuenta" style="display: none;">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" maxlength="150" placeholder="nombre@correo.com">
+    </div>
+
+    <!-- Campo de Contraseña en lugar de Correo -->
+    <div class="input-group">
+        <label for="contrasena">Contraseña</label>
+        <input type="password" id="contrasena" placeholder="Ingresa tu contraseña" required>
+    </div>
+    
+    <button type="submit" class="btn-primary">Ingresar al Catálogo</button>
+    <button type="button" class="btn-volver" id="btn-atras-1">← Cambiar Rol</button>
+</form>
+    </div>
+
+    <div class="container hidden" id="paso-biblioteca">
+        <div class="header-biblioteca">
+            <h1>📚 Catálogo de Biblioteca</h1>
+            <p class="welcome-text" id="mensaje-bienvenida">¡Hola! Selecciona un libro para realizar tu préstamo.</p>
+        </div>
+
+        <nav id="navegacion-acciones" class="navegacion-acciones" aria-label="Acciones principales" style="display: none;">
+            <div id="acciones-usuario" style="display: none;">
+                <button type="button" class="btn-accion" data-vista="catalogo">Catálogo</button>
+                <button type="button" class="btn-accion" data-vista="prestamos-usuario">Préstamos y Pendientes</button>
+                <button type="button" class="btn-accion" data-vista="resenas">Dejar Reseña</button>
+            </div>
+            <div id="acciones-admin" style="display: none;">
+                <button type="button" class="btn-accion" data-vista="catalogo">Catálogo de libros</button>
+                <button type="button" class="btn-accion" data-vista="prestamos-admin">Préstamos y Pendientes</button>
+                <button type="button" class="btn-accion" data-vista="inventario-admin">Inventario</button>
+                <button type="button" class="btn-accion" data-vista="usuarios-admin">Usuarios</button>
+            </div>
+        </nav>
+
+        <div id="usuario-solicitud" class="modal-libro hidden" role="dialog" aria-modal="true" aria-labelledby="titulo-solicitud">
+            <div class="modal-contenido modal-ancho">
+            <button type="button" id="cerrar-modal-solicitud" class="cerrar-modal" aria-label="Cerrar solicitud">×</button>
+            <h2 id="titulo-solicitud">Solicitar préstamo</h2>
+            <p class="registro-ayuda">Elige las fechas de inicio y fin. El préstamo puede durar hasta 15 días.</p>
+            <form id="form-prestamo-usuario">
+                <div class="registro-libro-grid">
+                    <div class="input-group"><label for="solicitud-nombre">Nombre completo</label><input id="solicitud-nombre" name="nombre" maxlength="100" required></div>
+                    <div class="input-group"><label for="solicitud-rol">Rol</label><select id="solicitud-rol" name="rol" required><option value="Estudiante">Estudiante</option><option value="Profesor">Docente</option></select></div>
+                    <div class="input-group"><label for="solicitud-libro">Nombre del libro</label><select id="solicitud-libro" name="libro" required><option value="">Selecciona un libro disponible</option></select></div>
+                    <div class="input-group"><label for="solicitud-whatsapp">WhatsApp con código de país</label><input id="solicitud-whatsapp" name="telefono_whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="+573001234567" pattern="\+?[1-9][0-9]{7,14}" maxlength="16" title="Usa el formato internacional: +, código de país y de 8 a 15 dígitos." required></div>
+                    <label class="consentimiento-whatsapp"><input id="solicitud-consentimiento-whatsapp" name="whatsapp_consentimiento" type="checkbox" value="1" required> Acepto recibir recordatorios de vencimiento por WhatsApp</label>
+                    <div class="input-group"><label for="solicitud-fecha">Fecha de inicio</label><input id="solicitud-fecha" name="fecha_inicio" type="date" required></div>
+                    <div class="input-group"><label for="solicitud-devolucion">Fecha de fin</label><input id="solicitud-devolucion" name="fecha_fin" type="date" required></div>
+                </div>
+                <button class="btn-primary" type="submit">Solicitar préstamo</button>
+                <p id="mensaje-prestamo-usuario" class="mensaje-formulario" role="status" aria-live="polite"></p>
+            </form>
+            </div>
+        </div>
+        <section id="panel-usuario" class="resumen-panel hidden">
+            <div id="usuario-prestamos" class="hidden">
+            <h2 id="mis-prestamos">Mis Préstamos y Pendientes</h2>
+            <div id="resumen-usuario" class="tarjetas-resumen"></div>
+            <div id="notificaciones-prestamo" class="notificaciones-prestamo" aria-live="polite"></div>
+            <h3 id="mis-pendientes">Solicitudes, préstamos activos e historial</h3>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead><tr><th>Libro</th><th>Estado</th><th>Entrega</th><th>Alerta / multa</th></tr></thead>
+                    <tbody id="tabla-mis-prestamos"></tbody>
+                </table>
+            </div>
+            </div>
+        </section>
+
+        <!-- Panel de Administrador -->
+        <div id="panel-admin" class="hidden">
+            <div class="admin-panel">
+                <section id="vista-prestamos-admin" class="hidden">
+                <img class="escudo-panel-admin" src="assets/logo-institucion-cusiana.png" alt="Escudo institucional">
+                <h2>⚙️ Panel de Administración</h2>
+
+                <h3>Resumen de préstamos y multas</h3>
+                <div id="resumen-admin" class="tarjetas-resumen"></div>
+                <button id="btn-verificar-vencimientos" type="button" class="btn-accion">Enviar recordatorios pendientes ahora</button>
+                <p id="mensaje-vencimientos" class="mensaje-formulario" role="status" aria-live="polite"></p>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead><tr><th>Usuario</th><th>Libro</th><th>Estado</th><th>Entrega</th><th>Multa</th><th>Devolución</th></tr></thead>
+                        <tbody id="tabla-control-prestamos"></tbody>
+                    </table>
+                </div>
+                </section>
+                <section id="vista-inventario-admin" class="hidden">
+                <h3 id="inventario-admin">Inventario de libros</h3>
+                <button id="btn-exportar-inventario-panel" type="button" class="btn-accion">Descargar inventario CSV</button>
+                <h3>Registrar libro</h3>
+                <form id="form-nuevo-libro" enctype="multipart/form-data">
+                    <input name="titulo" placeholder="Título" required>
+                    <input name="autor" placeholder="Autor" required>
+                    <input name="codigo" placeholder="Código" required>
+                    <input name="editorial" placeholder="Editorial" required>
+                    <input name="ubicacion" placeholder="Ubicación" required>
+                    <select name="genero_literario" required><option value="">Género literario</option><option>Narrativa</option><option>Poesía</option><option>Drama</option><option>Ensayo</option><option>Ciencia Ficción</option><option>Consulta</option></select>
+                    <input name="cantidad" type="number" min="1" value="1" required>
+                    <select name="estado" required><option>Disponible</option><option>Prestado</option></select>
+                    <input name="imagen" type="file" accept="image/jpeg,image/png">
+                    <button class="btn-primary" type="submit">Registrar libro</button>
+                    <p id="mensaje-nuevo-libro" class="mensaje-formulario" role="status"></p>
+                </form>
+                <div class="cargas-masivas">
+                    <label>Cargar libros CSV <input id="upload-libros" type="file" accept=".csv,text/csv"></label>
+                    <label>Cargar estudiantes CSV <input id="upload-estudiantes" type="file" accept=".csv,text/csv"></label>
+                    <label>Cargar docentes CSV <input id="upload-docentes" type="file" accept=".csv,text/csv"></label>
+                </div>
+                </section>
+                <section id="vista-pendientes-admin" class="hidden">
+                <h3 id="solicitudes-admin">Solicitudes pendientes</h3>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead><tr><th>Usuario</th><th>Rol</th><th>Libro</th><th>Autor</th><th>Inicio elegido</th><th>Fin elegido</th><th>Solicitud</th><th>Acciones</th></tr></thead>
+                        <tbody id="tabla-solicitudes"><tr><td colspan="8">No hay solicitudes pendientes.</td></tr></tbody>
+                    </table>
+                </div>
+                </section>
+                <section id="vista-usuarios-admin" class="hidden">
+                <h3 id="usuarios-admin">Crear usuario</h3>
+                <form id="form-nuevo-usuario">
+                    <input name="doc" placeholder="Documento" maxlength="20" required>
+                    <input name="nombre" placeholder="Nombre completo" maxlength="100" required>
+                    <input name="correo" type="email" placeholder="Correo electrónico" maxlength="150" required>
+                    <input name="telefono_whatsapp" type="tel" placeholder="WhatsApp internacional, ej. 573001234567" maxlength="20">
+                    <label><input name="whatsapp_consentimiento" type="checkbox" value="1"> Autoriza recibir recordatorios por WhatsApp</label>
+                    <select name="rol" required><option value="Estudiante">Estudiante</option><option value="Profesor">Docente</option><option value="Administrador">Administrador</option></select>
+                    <input name="contrasena" type="password" placeholder="Contraseña (mínimo 8 caracteres)" minlength="8" required>
+                    <button class="btn-primary" type="submit">Crear usuario</button>
+                    <p id="mensaje-nuevo-usuario" class="mensaje-formulario" role="status"></p>
+                </form>
+                </section>
+            </div>
+        </div>
+
+        <!-- Catálogo de Libros -->
+        <div id="vista-catalogo" class="catalogo-section hidden">
+            <div class="buscador-libros">
+                <span aria-hidden="true">⌕</span>
+                <input id="buscar-libros" type="search" placeholder="Buscar por título, autor o ISBN" aria-label="Buscar libros">
+            </div>
+            <div class="filtros-avanzados" aria-label="Filtros avanzados del catálogo">
+                <select id="filtro-categoria" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option></select>
+                <select id="filtro-materia"><option value="">Todas las materias</option><option>Lenguaje</option><option>Matemáticas</option><option>Ciencias Naturales</option><option>Ciencias Sociales</option><option>Inglés</option><option>Arte</option></select>
+                <select id="filtro-genero"><option value="">Todos los géneros</option><option>Narrativa</option><option>Poesía</option><option>Teatro</option><option>Cuento</option><option>Novela</option><option>Fantasía</option><option>Ciencia Ficción</option><option>Ensayo</option><option>Consulta</option></select>
+                <button id="limpiar-filtros" type="button" class="btn-accion">Limpiar filtros</button>
+            </div>
+            <h3>📖 Todos los Libros</h3>
+            <div id="catalogo-libros" class="libros-grid" aria-live="polite"></div>
+        </div>
+
+        <section id="modulo-interactivo" class="modulo-interactivo hidden" aria-labelledby="titulo-interactivo">
+            <h2 id="titulo-interactivo">Dejar Reseña</h2>
+            <p id="estado-interactivo" class="estado-interactivo" aria-live="polite">Cargando tus libros devueltos…</p>
+            <div class="interactivo-grid">
+                <div><h3>Califica un libro que ya devolviste</h3><form id="form-resena"><label for="resena-libro">Libro</label><select id="resena-libro" required><option value="">Selecciona un libro</option></select><fieldset id="contenido-resena" disabled><label>Calificación</label><div class="estrellas" role="radiogroup" aria-label="Calificación"><input type="radio" name="calificacion" id="estrella-5" value="5" required><label for="estrella-5" title="5 estrellas">★</label><input type="radio" name="calificacion" id="estrella-4" value="4"><label for="estrella-4" title="4 estrellas">★</label><input type="radio" name="calificacion" id="estrella-3" value="3"><label for="estrella-3" title="3 estrellas">★</label><input type="radio" name="calificacion" id="estrella-2" value="2"><label for="estrella-2" title="2 estrellas">★</label><input type="radio" name="calificacion" id="estrella-1" value="1"><label for="estrella-1" title="1 estrella">★</label></div><label for="resena-comentario">Comentario (opcional)</label><textarea id="resena-comentario" maxlength="1000" placeholder="¿Qué te pareció el libro?"></textarea><button class="btn-primary" type="submit">Publicar reseña</button></fieldset></form></div>
+                <div><h3>Reseñas de lectores</h3><div id="lista-resenas" class="lista-resenas" aria-live="polite"></div></div>
+                <fieldset id="contenido-actividad" class="actividad-lectura hidden" disabled><h3>Reto de palabras</h3><p>Escribe las cuatro palabras relacionadas con la lectura: <strong>LIBRO, AUTOR, CUENTO y LECTURA</strong>.</p><input id="respuesta-reto" type="text" placeholder="Ej.: libro, autor..."><button id="validar-reto" type="button" class="btn-accion">Comprobar</button><p id="resultado-reto" aria-live="polite"></p></fieldset>
+            </div>
+        </section>
+        <button type="button" class="btn-volver btn-cerrar-sesion" id="btn-cerrar">Cerrar Sesión</button>
+    </div>
+
+    <div id="modal-editar-libro" class="modal-libro hidden" role="dialog" aria-modal="true" aria-labelledby="titulo-editar-libro">
+        <div class="modal-contenido modal-ancho">
+            <button type="button" id="cerrar-modal-editar" class="cerrar-modal" aria-label="Cerrar edición">×</button>
+            <h2 id="titulo-editar-libro">Editar libro</h2>
+            <form id="form-editar-libro">
+                <input type="hidden" name="id">
+                <div class="registro-libro-grid">
+                    <div class="input-group"><label>Título<input name="titulo" maxlength="200" required></label></div>
+                    <div class="input-group"><label>Autor<input name="autor" maxlength="100" required></label></div>
+                    <div class="input-group"><label>Código<input name="codigo" maxlength="50"></label></div>
+                    <div class="input-group"><label>Editorial<input name="editorial" maxlength="120"></label></div>
+                    <div class="input-group"><label>Ubicación<input name="ubicacion" maxlength="120"></label></div>
+                    <div class="input-group"><label>ISBN<input name="isbn" maxlength="20"></label></div>
+                    <div class="input-group"><label>Año de publicación<input name="anio_publicacion" type="number" min="1000" max="2100"></label></div>
+                    <div class="input-group"><label>Género literario<select name="genero_literario"><option>Narrativa</option><option>Poesía</option><option>Drama</option><option>Ensayo</option><option>Ciencia Ficción</option><option>Consulta</option></select></label></div>
+                    <div class="input-group"><label>Ejemplares totales<input name="ejemplares_total" type="number" min="1" max="9999" required></label></div>
+                    <div class="input-group"><label>URL de portada (opcional)<input name="imagen_url" type="url" maxlength="500" placeholder="https://..."></label></div>
+                </div>
+                <div class="input-group"><label>Sinopsis<textarea name="sinopsis" rows="3"></textarea></label></div>
+                <button class="btn-primary" type="submit">Guardar cambios</button>
+                <p id="mensaje-editar-libro" class="mensaje-formulario" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-libro" class="modal-libro hidden" role="dialog" aria-modal="true" aria-labelledby="detalle-libro-titulo">
+        <div class="modal-contenido">
+            <button id="cerrar-modal-libro" class="cerrar-modal" aria-label="Cerrar detalle">×</button>
+            <div id="detalle-libro"></div>
+        </div>
+    </div>
+
+    <script src="js/portadas-inteligente.js?v=1"></script>
+    <script src="js/main.js?v=2026-10-22e"></script>
+</body>
+</html>

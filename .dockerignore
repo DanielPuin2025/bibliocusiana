@@ -1,0 +1,9 @@
+.git
+.env
+.env.*
+database/
+.claude/
+.vscode/
+vendor/
+backend/config/mail.php
+frontend/js/main.js.backup

@@ -1,0 +1,394 @@
+/* ================================================
+   DISEÑO MODERNO COMPLETO - VERSIÓN FINAL
+   Sistema de Biblioteca Bibliocusiana
+   ================================================ */
+
+/* === ANIMACIONES === */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+/* === HEADER MODERNO === */
+.header-biblioteca {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 35px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+    animation: slideDown 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-biblioteca::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    animation: shimmer 3s infinite;
+}
+
+.header-biblioteca h1 {
+    font-size: 36px !important;
+    font-weight: 800 !important;
+    color: white !important;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    margin-bottom: 12px !important;
+    position: relative;
+    z-index: 1;
+}
+
+.header-biblioteca .welcome-text {
+    font-size: 19px !important;
+    color: rgba(255,255,255,0.95) !important;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+/* === NAVEGACIÓN MODERNA === */
+.navegacion-acciones {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    animation: slideDown 0.8s ease-out;
+}
+
+.navegacion-acciones > div {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* === BOTONES MODERNOS === */
+.btn-accion {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 14px 28px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.btn-accion::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-accion:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-accion:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5) !important;
+}
+
+.btn-accion.is-active {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    box-shadow: 0 6px 20px rgba(245, 87, 108, 0.5) !important;
+    transform: scale(1.05) !important;
+}
+
+/* === BUSCADOR MODERNO === */
+.buscador-libros {
+    position: relative;
+    margin-bottom: 28px;
+    animation: slideDown 1s ease-out;
+}
+
+.buscador-libros span {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #667eea;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.buscador-libros input {
+    width: 100% !important;
+    padding: 18px 24px 18px 58px !important;
+    border: 2px solid #e0e7ff !important;
+    border-radius: 16px !important;
+    font-size: 16px !important;
+    background: white !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08) !important;
+    transition: all 0.3s ease !important;
+}
+
+.buscador-libros input:focus {
+    border-color: #667eea !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25) !important;
+    outline: none !important;
+    transform: translateY(-1px);
+}
+
+.buscador-libros input:focus + span {
+    color: #764ba2;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* === GRID DE LIBROS === */
+.libros-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)) !important;
+    gap: 28px !important;
+    padding: 12px 0 !important;
+}
+
+/* === TARJETAS DE LIBROS 3D === */
+.libro-tarjeta {
+    background: white !important;
+    border-radius: 18px !important;
+    padding: 18px !important;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    position: relative !important;
+    overflow: visible !important;
+    animation: fadeIn 0.6s ease-out !important;
+}
+
+.libro-tarjeta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+    border-radius: 18px 18px 0 0;
+    transform: scaleX(0);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.libro-tarjeta:hover::before {
+    transform: scaleX(1);
+}
+
+.libro-tarjeta:hover {
+    transform: translateY(-12px) scale(1.03) !important;
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3) !important;
+    z-index: 10 !important;
+}
+
+/* === PORTADAS CON EFECTOS === */
+.portada-contenedor {
+    position: relative;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.portada-contenedor::after {
+    content: '👁️ Ver más';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.libro-tarjeta:hover .portada-contenedor::after {
+    opacity: 1;
+}
+
+.portada-libro {
+    width: 100% !important;
+    height: 280px !important;
+    object-fit: cover !important;
+    border-radius: 14px !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+}
+
+.portada-libro[src=""], .portada-libro[src*="portada-no-disponible"] {
+    animation: shimmer 1.5s infinite;
+}
+
+.libro-tarjeta:hover .portada-libro {
+    transform: scale(1.08) rotate(1deg) !important;
+    filter: brightness(1.1);
+}
+
+/* === INFORMACIÓN DEL LIBRO === */
+.libro-tarjeta h4 {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #2c3e50 !important;
+    margin: 0 0 8px 0 !important;
+    line-height: 1.4 !important;
+    min-height: 44px;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+}
+
+.libro-tarjeta p {
+    font-size: 14px !important;
+    color: #7f8c8d !important;
+    margin: 0 0 12px 0 !important;
+    font-style: italic !important;
+}
+
+/* === BADGES MEJORADOS === */
+.badge {
+    display: inline-block !important;
+    padding: 7px 16px !important;
+    border-radius: 25px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    margin: 8px 0 !important;
+}
+
+.badge.disponible {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+    color: white !important;
+    box-shadow: 0 3px 12px rgba(56, 239, 125, 0.4) !important;
+}
+
+.badge.prestado {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%) !important;
+    color: white !important;
+    box-shadow: 0 3px 12px rgba(238, 9, 121, 0.4) !important;
+}
+
+/* === BOTONES EN TARJETAS === */
+.btn-prestar, .libro-accion button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+    width: 100% !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+    margin-top: 4px !important;
+}
+
+.btn-prestar:hover, .libro-accion button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5) !important;
+}
+
+/* === FILTROS AVANZADOS === */
+.filtros-avanzados {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    animation: slideDown 1.2s ease-out;
+}
+
+.filtros-avanzados select {
+    flex: 1;
+    min-width: 200px;
+    padding: 14px 18px;
+    border: 2px solid #e0e7ff;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.filtros-avanzados select:hover {
+    border-color: #667eea;
+    transform: translateY(-1px);
+}
+
+.filtros-avanzados select:focus {
+    outline: none;
+    border-color: #764ba2;
+    box-shadow: 0 5px 15px rgba(118, 75, 162, 0.25);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .header-biblioteca h1 {
+        font-size: 26px !important;
+    }
+
+    .header-biblioteca .welcome-text {
+        font-size: 16px !important;
+    }
+
+    .libros-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+        gap: 20px !important;
+    }
+
+    .navegacion-acciones > div {
+        flex-direction: column;
+    }
+
+    .btn-accion {
+        width: 100%;
+    }
+}
+
+/* === CARGA DE IMÁGENES === */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.portada-libro.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+

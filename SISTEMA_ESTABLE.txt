@@ -1,0 +1,15 @@
+﻿SISTEMA RESTAURADO A VERSION ESTABLE
+
+Fecha: 10/21/2026 22:22:43
+
+Cambios aplicados:
+- Eliminados CSS problemáticos
+- Sistema funcional básico
+- Límite de 15 días configurado
+- Recordatorios de 1 día antes
+- Fondo de biblioteca activo
+
+Para usar:
+1. http://localhost/biblioteca/frontend/index.html
+2. Inicia sesión con una cuenta individual configurada para el entorno.
+3. Ejecutar SQL: database/actualizar_sistema_15_dias.sql

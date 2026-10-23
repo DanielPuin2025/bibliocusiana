@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copie este archivo como mail.php y complete los datos de una contraseña de
+ * aplicación de Google. No suba mail.php al repositorio.
+ */
+return [
+    'host' => 'smtp.gmail.com',
+    'port' => 587,
+    'username' => 'tu_correo@gmail.com',
+    'password' => 'contraseña_de_aplicacion_de_16_caracteres',
+    'from_email' => 'tu_correo@gmail.com',
+    'from_name' => 'Biblioteca Escolar',
+];
