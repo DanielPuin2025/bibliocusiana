@@ -7,6 +7,16 @@ $categoria = trim((string) ($_GET['categoria'] ?? ''));
 $materia = trim((string) ($_GET['materia'] ?? ''));
 $genero = trim((string) ($_GET['genero'] ?? ''));
 
+if ($conexion->query("SHOW TABLES LIKE 'libros'")->num_rows === 0) {
+    http_response_code(503);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'La base de datos todavía no tiene el esquema de biblioteca. El administrador debe importar database/biblioteca.sql.'
+    ], JSON_UNESCAPED_UNICODE);
+    $conexion->close();
+    exit;
+}
+
 // Compatibility repair for databases imported from the original schema.
 $columnas = [];
 $resultadoColumnas = $conexion->query('SHOW COLUMNS FROM libros');

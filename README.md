@@ -60,10 +60,9 @@ Sistema web completo para la gestión de préstamos de libros en una biblioteca 
    - Abrir XAMPP Control Panel
    - Iniciar **Apache** y **MySQL**
 
-3. **Crear la base de datos**:
-   - Ir a `http://localhost/phpmyadmin`
-   - Crear una nueva base de datos llamada `biblioteca_db`
-   - Importar `database/biblioteca.sql` en una base de datos vacía. Este archivo crea el esquema, no contiene usuarios ni registros personales.
+3. **Crear el esquema de la base de datos**:
+   - Crear la base configurada en `DB_NAME` (localmente, `biblioteca_db`).
+   - Importar `database/biblioteca.sql`. El script crea las tablas que falten y no elimina tablas ni registros existentes; no carga usuarios ni libros.
 
 4. **Configurar la conexión** (si es necesario):
    - Configurar `DB_HOST`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` como variables de entorno de PHP.
@@ -75,11 +74,11 @@ Sistema web completo para la gestión de préstamos de libros en una biblioteca 
 ## 🚀 Despliegue en EasyPanel
 
 1. Crear un servicio de aplicación conectado al repositorio `DanielPuin2025/bibliocusiana` y usar el `Dockerfile` incluido. El contenedor escucha en el puerto `80`; la raíz del dominio redirige a `frontend/`, que sirve la aplicación y sus recursos estáticos.
-2. Crear o seleccionar el servicio MySQL y configurar `DB_HOST`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` en las variables privadas del servicio web. `DB_HOST` debe ser el nombre de host interno del servicio MySQL que proporciona EasyPanel; no uses `localhost`, porque PHP y MySQL corren en contenedores distintos.
+2. Crear o seleccionar el servicio MySQL y configurar `DB_HOST`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` en las variables privadas del servicio web. `DB_HOST` debe ser el nombre de host interno del servicio MySQL que proporciona EasyPanel; no uses `localhost`, porque PHP y MySQL corren en contenedores distintos. El script SQL usa la base `biblioteca_db`, así que `DB_NAME` debe tener ese valor.
 3. En el servicio web, asociar el dominio `bibliocusiana.programacionsena.online` y activar HTTPS. Configurar el DNS del subdominio según el destino que indique EasyPanel; la dirección `/projects/sustentaciones2026` es la interfaz de administración, no la URL pública de la aplicación.
-4. Importar el respaldo de la base de datos por un canal privado y seguro. Los respaldos con usuarios, CSV y hojas Excel no deben subirse al repositorio ni incluirse en imágenes Docker.
+4. Inicializar las tablas importando `database/biblioteca.sql` en la base indicada por `DB_NAME`; luego, si se deben conservar datos existentes, restaurar el respaldo por un canal privado y seguro. Los respaldos con usuarios, CSV y hojas Excel no deben subirse al repositorio ni incluirse en imágenes Docker.
 
-**Importante:** `database/biblioteca.sql` contiene instrucciones `DROP TABLE`; ejecútalo únicamente en una base de datos vacía. No lo importes sobre una base de producción con datos porque eliminaría sus tablas y registros. Para conservar los registros actuales, restaura un respaldo privado de la base de datos en el servicio MySQL de producción.
+El esquema debe importarse también en el servicio MySQL de EasyPanel antes de probar el inicio de sesión o el catálogo. El archivo no contiene usuarios ni libros; restaura esos datos desde un respaldo privado si necesitas conservar el inventario local.
 
 ## 🛠️ Estructura del Proyecto
 

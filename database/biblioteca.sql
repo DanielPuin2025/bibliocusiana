@@ -13,10 +13,9 @@
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `biblioteca_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
 USE `biblioteca_db`;
-DROP TABLE IF EXISTS `estudiantes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `estudiantes` (
+CREATE TABLE IF NOT EXISTS `estudiantes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `doc` varchar(20) NOT NULL,
   `nombre` varchar(100) NOT NULL,
@@ -33,10 +32,9 @@ CREATE TABLE `estudiantes` (
   UNIQUE KEY `correo` (`correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `generos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `generos` (
+CREATE TABLE IF NOT EXISTS `generos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `genero_literario` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
@@ -44,10 +42,9 @@ CREATE TABLE `generos` (
   UNIQUE KEY `genero_literario` (`genero_literario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `libros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `libros` (
+CREATE TABLE IF NOT EXISTS `libros` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(200) NOT NULL,
   `codigo` varchar(50) DEFAULT NULL,
@@ -75,36 +72,9 @@ CREATE TABLE `libros` (
   UNIQUE KEY `codigo` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `notificaciones_prestamo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notificaciones_prestamo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `prestamo_id` int(11) NOT NULL,
-  `dias_antes` tinyint(3) unsigned NOT NULL,
-  `enviado_en` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `un_recordatorio_por_prestamo` (`prestamo_id`,`dias_antes`),
-  CONSTRAINT `notificaciones_prestamo_ibfk_1` FOREIGN KEY (`prestamo_id`) REFERENCES `prestamos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `notificaciones_whatsapp`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notificaciones_whatsapp` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `prestamo_id` int(11) NOT NULL,
-  `dias_antes` tinyint(3) unsigned NOT NULL,
-  `enviado_en` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `un_whatsapp_por_prestamo` (`prestamo_id`,`dias_antes`),
-  CONSTRAINT `notificaciones_whatsapp_ibfk_1` FOREIGN KEY (`prestamo_id`) REFERENCES `prestamos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `politicas_prestamo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `politicas_prestamo` (
+CREATE TABLE IF NOT EXISTS `politicas_prestamo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `categoria_prestamo` varchar(50) NOT NULL DEFAULT 'General',
   `rol` enum('Estudiante','Profesor') NOT NULL,
@@ -113,10 +83,9 @@ CREATE TABLE `politicas_prestamo` (
   UNIQUE KEY `uq_politica_categoria_rol` (`categoria_prestamo`,`rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `prestamos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `prestamos` (
+CREATE TABLE IF NOT EXISTS `prestamos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) DEFAULT NULL,
   `rol` varchar(20) DEFAULT NULL,
@@ -151,10 +120,33 @@ CREATE TABLE `prestamos` (
   CONSTRAINT `prestamos_ibfk_3` FOREIGN KEY (`aprobado_por`) REFERENCES `estudiantes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `resenas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `resenas` (
+CREATE TABLE IF NOT EXISTS `notificaciones_prestamo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prestamo_id` int(11) NOT NULL,
+  `dias_antes` tinyint(3) unsigned NOT NULL,
+  `enviado_en` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `un_recordatorio_por_prestamo` (`prestamo_id`,`dias_antes`),
+  CONSTRAINT `notificaciones_prestamo_ibfk_1` FOREIGN KEY (`prestamo_id`) REFERENCES `prestamos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `notificaciones_whatsapp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prestamo_id` int(11) NOT NULL,
+  `dias_antes` tinyint(3) unsigned NOT NULL,
+  `enviado_en` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `un_whatsapp_por_prestamo` (`prestamo_id`,`dias_antes`),
+  CONSTRAINT `notificaciones_whatsapp_ibfk_1` FOREIGN KEY (`prestamo_id`) REFERENCES `prestamos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `resenas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libro_id` int(11) NOT NULL,
   `estudiante_id` int(11) NOT NULL,
@@ -171,10 +163,9 @@ CREATE TABLE `resenas` (
   CONSTRAINT `resenas_ibfk_3` FOREIGN KEY (`prestamo_id`) REFERENCES `prestamos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios` (
+CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `documento` varchar(20) NOT NULL,
@@ -194,4 +185,3 @@ CREATE TABLE `usuarios` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-

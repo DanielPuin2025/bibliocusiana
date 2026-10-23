@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_BASE = window.location.protocol === 'file:'
         ? 'http://localhost/biblioteca/backend/api/'
         : new URL('../backend/api/', window.location.href).href;
+    const ASSET_BASE = new URL('../frontend/assets/', window.location.href);
+    const assetUrl = path => new URL(path, ASSET_BASE).href;
 
     function guardarFiltros() {
         const filtros = ['buscar-libros', 'filtro-categoria', 'filtro-materia', 'filtro-genero'];
@@ -104,7 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (libro.imagen) {
             if (libro.imagen.startsWith('https://covers.openlibrary.org/')) return libro.imagen;
             const rutaImagen = libro.imagen.split('/').map(parte => encodeURIComponent(parte)).join('/');
-            return libro.imagen.startsWith('imagenes/') ? `../${rutaImagen}` : `assets/IMAGES-LIBROS/${rutaImagen}`;
+            return libro.imagen.startsWith('imagenes/')
+                ? new URL(`../${rutaImagen}`, window.location.href).href
+                : assetUrl(libro.imagen.startsWith('IMAGES-LIBROS/') ? rutaImagen : `IMAGES-LIBROS/${rutaImagen}`);
         }
         return null;
     }
@@ -115,13 +119,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (portadaLocal) return portadaLocal;
 
         // 2. Portada encontrada en internet y guardada en la BD (solo la URL, no el archivo)
-        if (libro.imagen_url && libro.imagen_url !== 'assets/portada-no-disponible.svg') return libro.imagen_url;
+        if (libro.imagen_url && libro.imagen_url !== 'assets/portada-no-disponible.svg') {
+            return libro.imagen_url.startsWith('assets/')
+                ? assetUrl(libro.imagen_url.slice('assets/'.length))
+                : libro.imagen_url;
+        }
 
         // 3. Con ISBN se pide directamente a Open Library; si no existe, onerror muestra la imagen por defecto
         const isbn = libro.isbn || isbnPorTitulo[libro.titulo];
         if (isbn) return `https://covers.openlibrary.org/b/isbn/${encodeURIComponent(isbn)}-M.jpg?default=false`;
 
-        return 'assets/portada-no-disponible.svg';
+        return assetUrl('portada-no-disponible.svg');
     }
 
     function portadaBuscadaRecientemente(libro) {
@@ -140,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             imagen.onerror = null;
-            imagen.src = 'assets/portada-no-disponible.svg';
+            imagen.src = assetUrl('portada-no-disponible.svg');
         };
     }
 
@@ -229,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     mostrarResenas(resultado.resenas || []);
                 }
             } else {
-                alert('Error al cargar libros.');
+                alert(resultado.message || 'Error al cargar libros.');
             }
         } catch (error) {
             console.error('Error:', error);

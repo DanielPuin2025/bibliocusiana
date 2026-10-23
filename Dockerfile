@@ -8,7 +8,8 @@ FROM php:8.3-apache
 
 COPY docker/apache-bibliocusiana.conf /etc/apache2/conf-available/bibliocusiana.conf
 
-RUN docker-php-ext-install mysqli \
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && docker-php-ext-install mysqli \
     && a2enmod headers \
     && a2enconf bibliocusiana
 

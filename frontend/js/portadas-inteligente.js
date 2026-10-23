@@ -8,6 +8,8 @@
 
     // Cache de portadas encontradas
     const cachePortadas = new Map();
+    const ASSET_BASE = new URL('../frontend/assets/', window.location.href);
+    const assetUrl = path => new URL(path, ASSET_BASE).href;
 
     /**
      * Buscar portada usando Google Books API
@@ -59,9 +61,9 @@
 
         // 2. Imagen local si existe
         if (libro.imagen && !libro.imagen.includes('portada-no-disponible')) {
-            const rutaLocal = libro.imagen.startsWith('IMAGES-LIBROS/')
-                ? `assets/${libro.imagen}`
-                : `assets/IMAGES-LIBROS/${libro.imagen}`;
+            const rutaLocal = assetUrl(libro.imagen.startsWith('IMAGES-LIBROS/')
+                ? libro.imagen
+                : `IMAGES-LIBROS/${libro.imagen}`);
             cachePortadas.set(cacheKey, rutaLocal);
             return rutaLocal;
         }
@@ -94,7 +96,7 @@
         }
 
         // 6. Fallback: imagen no disponible
-        const fallback = 'assets/portada-no-disponible.svg';
+        const fallback = assetUrl('portada-no-disponible.svg');
         cachePortadas.set(cacheKey, fallback);
         return fallback;
     };
@@ -142,7 +144,7 @@
         imagenElement.onerror = function() {
             if (this.src.includes('portada-no-disponible.svg')) return;
             this.onerror = null;
-            this.src = 'assets/portada-no-disponible.svg';
+            this.src = assetUrl('portada-no-disponible.svg');
         };
     };
 
