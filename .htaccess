@@ -1,4 +1,4 @@
 # Scripts de mantenimiento/diagnóstico de la raíz: solo accesibles desde el propio servidor.
-<If "%{REQUEST_URI} =~ m#^/(?!test_libros\.php$)(?:[^/]+/)?[^/]+\.(php|sql|md|bat|py|txt|example)$#">
+<If "%{REQUEST_URI} =~ m#^/(?:[^/]+/)?[^/]+\.(php|sql|md|bat|py|txt|example)$#">
     Require local
 </If>

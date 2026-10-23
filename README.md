@@ -74,12 +74,12 @@ Sistema web completo para la gestión de préstamos de libros en una biblioteca 
 
 ## 🚀 Despliegue en EasyPanel
 
-1. Crear un servicio de aplicación conectado al repositorio `DanielPuin2025/bibliocusiana` y usar el `Dockerfile` incluido. El contenedor escucha en el puerto `80`; la página de inicio sirve `frontend/index.html`.
-2. Crear o seleccionar el servicio MySQL y configurar `DB_HOST`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` en las variables privadas del servicio web.
+1. Crear un servicio de aplicación conectado al repositorio `DanielPuin2025/bibliocusiana` y usar el `Dockerfile` incluido. El contenedor escucha en el puerto `80`; la raíz del dominio redirige a `frontend/`, que sirve la aplicación y sus recursos estáticos.
+2. Crear o seleccionar el servicio MySQL y configurar `DB_HOST`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` en las variables privadas del servicio web. `DB_HOST` debe ser el nombre de host interno del servicio MySQL que proporciona EasyPanel; no uses `localhost`, porque PHP y MySQL corren en contenedores distintos.
 3. En el servicio web, asociar el dominio `bibliocusiana.programacionsena.online` y activar HTTPS. Configurar el DNS del subdominio según el destino que indique EasyPanel; la dirección `/projects/sustentaciones2026` es la interfaz de administración, no la URL pública de la aplicación.
 4. Importar el respaldo de la base de datos por un canal privado y seguro. Los respaldos con usuarios, CSV y hojas Excel no deben subirse al repositorio ni incluirse en imágenes Docker.
 
-El archivo `database/biblioteca.sql` sirve para crear el esquema en una base vacía. Para conservar los registros locales actuales, debe restaurarse un respaldo privado de la base de datos en el servicio MySQL de producción.
+**Importante:** `database/biblioteca.sql` contiene instrucciones `DROP TABLE`; ejecútalo únicamente en una base de datos vacía. No lo importes sobre una base de producción con datos porque eliminaría sus tablas y registros. Para conservar los registros actuales, restaura un respaldo privado de la base de datos en el servicio MySQL de producción.
 
 ## 🛠️ Estructura del Proyecto
 
