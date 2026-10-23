@@ -369,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (vista === 'usuarios-admin') {
             document.getElementById('panel-admin').classList.remove('hidden');
             document.getElementById('vista-usuarios-admin').classList.remove('hidden');
+            cargarUsuariosAdmin();
         } else if (vista === 'resenas') {
             document.getElementById('modulo-interactivo').classList.remove('hidden');
             await cargarLibros('resenas');
@@ -845,6 +846,70 @@ document.addEventListener('DOMContentLoaded', () => {
             mensaje.textContent = error.message || 'No fue posible crear el usuario.';
             mensaje.classList.add('error');
         } finally { boton.disabled = false; }
+    });
+
+    const listaUsuarios = document.getElementById('lista-usuarios');
+    const formEditarUsuario = document.getElementById('form-editar-usuario');
+    let usuariosAdmin = [];
+    const escaparHtml = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    async function cargarUsuariosAdmin() {
+        const params = new URLSearchParams({ q: document.getElementById('buscar-usuarios').value.trim(), rol: document.getElementById('filtro-rol-usuarios').value });
+        if (document.getElementById('filtro-sin-telefono').checked) params.set('sin_telefono', '1');
+        try {
+            const r = await fetch(API_BASE + 'listar_usuarios.php?' + params);
+            const res = await r.json();
+            if (res.status !== 'success') throw new Error(res.message);
+            usuariosAdmin = res.usuarios;
+            listaUsuarios.innerHTML = usuariosAdmin.length
+                ? '<table><thead><tr><th>Documento</th><th>Nombre</th><th>Rol</th><th>WhatsApp</th><th></th></tr></thead><tbody>' + usuariosAdmin.map(u =>
+                    `<tr><td>${escaparHtml(u.doc)}</td><td>${escaparHtml(u.nombre)}</td><td>${escaparHtml(u.rol)}</td><td>${u.telefono_whatsapp ? escaparHtml(u.telefono_whatsapp) : '<em>Falta</em>'}</td><td><button type="button" class="btn-accion editar-usuario" data-id="${u.id}">Editar</button></td></tr>`).join('') + '</tbody></table>'
+                : '<p>Sin resultados.</p>';
+        } catch (e) { listaUsuarios.textContent = 'No se pudo cargar la lista de usuarios.'; }
+    }
+    let temporizadorUsuarios;
+    ['buscar-usuarios', 'filtro-rol-usuarios', 'filtro-sin-telefono'].forEach(id => document.getElementById(id).addEventListener('input', () => {
+        clearTimeout(temporizadorUsuarios);
+        temporizadorUsuarios = setTimeout(cargarUsuariosAdmin, 300);
+    }));
+    listaUsuarios.addEventListener('click', e => {
+        const b = e.target.closest('.editar-usuario');
+        if (!b) return;
+        const u = usuariosAdmin.find(x => String(x.id) === b.dataset.id);
+        if (!u) return;
+        formEditarUsuario.classList.remove('hidden');
+        formEditarUsuario.elements.id.value = u.id;
+        formEditarUsuario.elements.doc.value = u.doc;
+        formEditarUsuario.elements.nombre.value = u.nombre || '';
+        formEditarUsuario.elements.correo.value = u.correo || '';
+        formEditarUsuario.elements.telefono_whatsapp.value = u.telefono_whatsapp || '';
+        formEditarUsuario.elements.whatsapp_consentimiento.checked = Number(u.whatsapp_consentimiento) === 1;
+        formEditarUsuario.elements.grado.value = u.grado || '';
+        formEditarUsuario.elements.area.value = u.area || '';
+        formEditarUsuario.elements.rol.value = u.rol;
+        formEditarUsuario.elements.contrasena.value = '';
+        document.getElementById('mensaje-editar-usuario').textContent = '';
+        formEditarUsuario.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    document.getElementById('cancelar-editar-usuario').addEventListener('click', () => formEditarUsuario.classList.add('hidden'));
+    formEditarUsuario.addEventListener('submit', async evento => {
+        evento.preventDefault();
+        const mensaje = document.getElementById('mensaje-editar-usuario');
+        mensaje.className = 'mensaje-formulario';
+        const datos = Object.fromEntries(new FormData(formEditarUsuario));
+        datos.whatsapp_consentimiento = formEditarUsuario.elements.whatsapp_consentimiento.checked ? 1 : 0;
+        try {
+            const r = await fetch(API_BASE + 'editar_usuario.php', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken }, body: JSON.stringify(datos) });
+            const res = await r.json();
+            if (res.status !== 'success') throw new Error(res.message);
+            mensaje.textContent = res.message;
+            mensaje.classList.add('exito');
+            formEditarUsuario.elements.contrasena.value = '';
+            cargarUsuariosAdmin();
+        } catch (error) {
+            mensaje.textContent = error.message || 'No fue posible guardar.';
+            mensaje.classList.add('error');
+        }
     });
 
     if (formNuevoLibro) {

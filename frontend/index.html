@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -188,6 +188,28 @@
                     <button class="btn-primary" type="submit">Crear usuario</button>
                     <p id="mensaje-nuevo-usuario" class="mensaje-formulario" role="status"></p>
                 </form>
+                <h3>Editar usuarios</h3>
+                <div class="buscador-libros">
+                    <input id="buscar-usuarios" type="search" placeholder="Buscar por nombre, documento o correo" aria-label="Buscar usuarios">
+                    <select id="filtro-rol-usuarios" aria-label="Rol"><option value="">Todos</option><option value="Estudiante">Estudiantes</option><option value="Profesor">Docentes</option><option value="Administrador">Administradores</option></select>
+                    <label><input id="filtro-sin-telefono" type="checkbox"> Sin teléfono</label>
+                </div>
+                <form id="form-editar-usuario" class="hidden">
+                    <input type="hidden" name="id">
+                    <input name="doc" placeholder="Documento" disabled>
+                    <input name="nombre" placeholder="Nombre completo" maxlength="100" required>
+                    <input name="correo" type="email" placeholder="Correo electrónico" maxlength="150">
+                    <input name="telefono_whatsapp" type="tel" placeholder="WhatsApp con indicativo, ej. 573001234567" maxlength="20">
+                    <label><input name="whatsapp_consentimiento" type="checkbox" value="1"> Autoriza WhatsApp</label>
+                    <input name="grado" placeholder="Grado / ficha" maxlength="50">
+                    <input name="area" placeholder="Área / programa" maxlength="100">
+                    <select name="rol" required><option value="Estudiante">Estudiante</option><option value="Profesor">Docente</option><option value="Administrador">Administrador</option></select>
+                    <input name="contrasena" type="password" placeholder="Nueva contraseña (opcional, mín. 8)" autocomplete="new-password">
+                    <button class="btn-primary" type="submit">Guardar cambios</button>
+                    <button class="btn-accion" type="button" id="cancelar-editar-usuario">Cancelar</button>
+                    <p id="mensaje-editar-usuario" class="mensaje-formulario" role="status"></p>
+                </form>
+                <div id="lista-usuarios" style="overflow-x:auto"></div>
                 </section>
             </div>
         </div>
@@ -270,6 +292,6 @@
     </div>
 
     <script src="../frontend/js/portadas-inteligente.js?v=2026-10-22-clave-usuarios"></script>
-    <script src="../frontend/js/main.js?v=2026-10-22-clave-usuarios"></script>
+    <script src="../frontend/js/main.js?v=2026-10-23-editar-usuarios"></script>
 </body>
 </html>
